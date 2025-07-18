@@ -1,0 +1,71 @@
+//主题样式配置文件
+@use "sass:map"; // 必须添加这行来使用 map.get()
+/* 黑夜主题 */
+$dark-theme: (
+  "primary": #6366f1,
+  "primary-hover": #818cf8,
+  "text": #e5e7eb,
+  "text-hover": #f3f4f6,
+  "danger": #ef4444,
+  "danger-hover": #f87171,
+  "text-color": #f9fafb,
+  "border-color": #4b5563,
+  "shadow": 0 1px 3px rgba(0, 0, 0, 0.5),
+  "shadow-hover": 0 4px 6px rgba(0, 0, 0, 0.3),
+  "focus": #a5b4fc,
+  "focus-ring": 0 0 0 2px rgba(165, 180, 252, 0.5),
+  "bg-color": #1f2937,
+  "card-bg": #374151
+);
+
+/* 蓝色主题 */
+$blue-theme: (
+  "primary": #4f46e5,
+  "primary-hover": #4338ca,
+  "text": #4f46e5,
+  "text-hover": #3730a3,
+  "danger": #ef4444,
+  "danger-hover": #dc2626,
+  "text-color": #374151,
+  "border-color": #d1d5db,
+  "shadow": 0 1px 3px rgba(0, 0, 0, 0.1),
+  "shadow-hover": 0 4px 6px rgba(0, 0, 0, 0.1),
+  "focus": #a5b4fc,
+  "focus-ring": 0 0 0 2px rgba(99, 102, 241, 0.5)
+);
+
+/* 绿色主题 */
+$green-theme: (
+  "primary": #10b981,
+  "primary-hover": #059669,
+  "text": #10b981,
+  "text-hover": #047857,
+  "danger": #ef4444,
+  "danger-hover": #dc2626,
+  "text-color": #374151,
+  "border-color": #d1d5db,
+  "shadow": 0 1px 3px rgba(0, 0, 0, 0.1),
+  "shadow-hover": 0 4px 6px rgba(0, 0, 0, 0.1),
+  "focus": #6ee7b7,
+  "focus-ring": 0 0 0 2px rgba(16, 185, 129, 0.5)
+);
+
+// 使用主题颜色
+@mixin theme($theme) {
+  --primary: #{map.get($theme, "primary")};
+  --primary-hover: #{map.get($theme, "primary-hover")};
+  --text: #{map.get($theme, "text")};
+  --text-hover: #{map.get($theme, "text-hover")};
+  --danger: #{map.get($theme, "danger")};
+  --danger-hover: #{map.get($theme, "danger-hover")};
+  --text-color: #{map.get($theme, "text-color")};
+  --border-color: #{map.get($theme, "border-color")};
+  --shadow: #{map.get($theme, "shadow")};
+  --shadow-hover: #{map.get($theme, "shadow-hover")};
+  --focus: #{map.get($theme, "focus")};
+  --focus-ring: #{map.get($theme, "focus-ring")};
+}
+
+:root {
+  @include theme($green-theme);
+}
