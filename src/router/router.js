@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import NProgress from 'nprogress'
-import '../theme/nprogress.scss'
-import { NextLoading } from '../utils/loading.js'
+import '@/theme/nprogress.scss'
+import { NextLoading } from '@/utils/loading.js'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -16,19 +16,9 @@ const router = createRouter({
       component: () => import('../views/white.vue')
     },
     {
-      path: '/barChart',
-      name: '柱状图',
-      component: () => import('../views/barchart/Index.vue')
-    },
-    {
-      path: '/lineChart',
-      name: '折线图',
-      component: () => import('../views/linechart/Index.vue')
-    },
-    {
-      path: '/pieChart',
-      name: '饼图',
-      component: () => import('../views/piechart/Index.vue')
+      path: '/chart',
+      name: 'chart',
+      component: () => import('../views/chart/index.vue')
     }
   ],
 });
@@ -43,7 +33,7 @@ NProgress.configure({
 router.beforeEach((to, from, next) => {
 
   if (to.path.startsWith('/addon/')) {
-    next(); // 直接放行，不执行后续逻辑
+    next();
     return;
   }
   // 启动进度条
@@ -52,7 +42,7 @@ router.beforeEach((to, from, next) => {
 
   const container = document.querySelector('.container');
   if (container) {
-    container.style.display = 'none'; // 隐藏 container 盒子
+    container.style.display = 'none';
   }
 
   // 进度条快速加载到70%
