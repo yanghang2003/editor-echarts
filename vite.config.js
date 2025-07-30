@@ -19,6 +19,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src/') // 设置@别名指向src目录
     }
   },
+  css: {
+    postcss: './postcss.config.js', // CSS 预处理 删除空格、缩短颜色值
+  },
   build: {
     outDir: 'dist', // 打包输出目录
     chunkSizeWarningLimit: 500, // 代码分包阈值

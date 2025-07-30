@@ -36,7 +36,7 @@ export class ChartHelper {
       case 'pie':
         return this.getPieChartData()
       default:
-        return console.log(this.type)
+        return console.log('获取失败:', this.type)
     }
   }
   //获取配置
