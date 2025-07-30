@@ -3,7 +3,7 @@ export const DEFAULT_BAR_CHART_DATA = {
   seriesData: [
     {
       name: '产品A',
-      color: getComputedStyle(document.documentElement).getPropertyValue('--primary').trim(),
+      color: '#10b981',
       points: [
         { label: '一月', value: 120 },
         { label: '二月', value: 180 },
@@ -13,7 +13,8 @@ export const DEFAULT_BAR_CHART_DATA = {
     },
     {
       name: '产品B',
-      color: getComputedStyle(document.documentElement).getPropertyValue('--text-hover').trim(),
+      color: '#047857',
+      /* color: getComputedStyle(document.documentElement).getPropertyValue('--text-hover').trim(), */
       points: [
         { label: '一月', value: 70 },
         { label: '二月', value: 260 },

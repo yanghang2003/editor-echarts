@@ -3,59 +3,60 @@
     <h2 class="menu-title">图表菜单</h2>
     <ul class="menu-list">
       <li
-        v-for="route in routes"
-        :key="route.name"
+        v-for="item in chartList"
+        :key="item.name"
         class="menu-item"
-        :class="{ active: isActive(route.name) }"
-        @click="handleClick(route)"
+        :class="{ active: isActive(item.type) }"
+        @click="handleClick(item.type)"
       >
-        {{ route.name }}
+        {{ item.name }}
       </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
-const router = useRouter();
-const currentRoute = useRoute();
+import { useStore } from 'vuex';
+import { chooseDefaultChartData } from '@/utils/chooseDefaultChartData';
 
-// 用于立即响应点击，避免延迟
-const activeRouteName = ref(currentRoute.name);
+const store = useStore();
 
-// 监听路由变化，确保最终状态正确
-watch(
-  () => currentRoute.name,
-  (newRouteName) => {
-    activeRouteName.value = newRouteName;
+const chartList = [{
+    name:'柱状图',
+    type:'bar'
+  },
+  {
+    name:'折线图',
+    type:'line'
+  },
+  {
+    name:'饼图',
+    type:'pie'
   }
-);
-
-const routes = computed(() => {
-  return router.options.routes.filter((route) => route.name && route.name !== 'home' && route.name !== 'addon');
-});
-
-// 检查当前路由是否激活
-const isActive = (routeName) => {
-  return activeRouteName.value === routeName;
-};
+]
+const isActive = (type) =>{
+  return store.state.type === type
+}
 
 // 处理点击事件
-const handleClick = (route) => {
-  // 消息提示框 这个是异步
+const handleClick = (type) => {
+  
+  if(store.state.type == type) return;
   ElMessageBox.confirm('切换后本次编辑数据将丢失，是否切换', '注意', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
     type: 'warning'
   })
     .then(() => {
+      store.commit('setType', type);
+      //切换后保留上次数据就不要深拷贝 不保留就下下句代码
+      /* store.commit('setEditData', chooseDefaultChartData(store.state.type)); */
+      if(!(store.state.type == store.state.editData.chartType)){
+        store.commit('setEditData', JSON.parse(JSON.stringify(chooseDefaultChartData(store.state.type))) );
+      }
+     
       ElMessage.success('切换成功');
-      // 先立即更新 activeRouteName（视觉上无延迟）
-      activeRouteName.value = route.name;
-      // 再跳转路由
-      router.push({ path: route.path });
     })
     .catch(() => {
       ElMessage.info('取消操作');
